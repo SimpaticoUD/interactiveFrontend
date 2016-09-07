@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        <link rel="stylesheet" href="context.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
+
+
+    </head>
+
+    <body>
+
+      <h2>Prueba de menú contextual con CSS y JS</h2>
+      <em>Chorradilla para ir probando</em>
+      <p>Hacemos botón derecho y sale el menú</p>
+
+      <br />
+
+      <p>Vamos a poner un par de párrafos a ver si pillamos el id</p>
+
+      <br />
+
+      <span id="parrafo1">
+        <p>Lorem fistrum pecador no te digo trigo por no llamarte Rodrigor ahorarr torpedo torpedo diodeno apetecan a peich papaar papaar diodenoo. A gramenawer quietooor de la pradera sexuarl papaar papaar pupita papaar papaar. Diodeno a wan apetecan llevame al sircoo jarl hasta luego Lucas al ataquerl torpedo condemor me cago en tus muelas de la pradera. Hasta luego Lucas al ataquerl fistro quietooor fistro diodeno mamaar fistro por la gloria de mi madre no puedor qué dise usteer. A gramenawer amatomaa mamaar se calle ustée por la gloria de mi madre quietooor benemeritaar ese que llega quietooor te voy a borrar el cerito a peich. Pupita se calle ustée no puedor te voy a borrar el cerito a gramenawer te voy a borrar el cerito. Pecador caballo blanco caballo negroorl de la pradera está la cosa muy malar a gramenawer.</p>
+      </span>
+
+      <span id="parrafo2">
+        <p>Está la cosa muy malar torpedo quietooor hasta luego Lucas amatomaa apetecan se calle ustée. Hasta luego Lucas papaar papaar caballo blanco caballo negroorl pecador me cago en tus muelas ese pedazo de benemeritaar. Jarl qué dise usteer al ataquerl la caidita amatomaa hasta luego Lucas ese hombree pupita mamaar. Por la gloria de mi madre ese que llega caballo blanco caballo negroorl amatomaa va usté muy cargadoo quietooor pecador. Al ataquerl está la cosa muy malar a wan ese que llega a gramenawer no puedor caballo blanco caballo negroorl ese pedazo de a peich mamaar. Jarl a wan hasta luego Lucas ese pedazo de apetecan. Quietooor llevame al sircoo pecador benemeritaar pecador ese hombree no puedor diodeno. Hasta luego Lucas te va a hasé pupitaa amatomaa diodenoo qué dise usteer caballo blanco caballo negroorl.</p>
+      </span>
+
+      <span id="parrafo3">
+        <p>No te digo trigo por no llamarte Rodrigor ese pedazo de te voy a borrar el cerito va usté muy cargadoo benemeritaar a gramenawer qué dise usteer a gramenawer ahorarr. De la pradera diodeno papaar papaar amatomaa. Caballo blanco caballo negroorl apetecan a peich papaar papaar de la pradera pecador. A peich quietooor jarl ese pedazo de diodeno a wan pupita diodeno ahorarr ese pedazo de benemeritaar. Está la cosa muy malar ese que llega benemeritaar a wan tiene musho peligro. Ese que llega la caidita está la cosa muy malar torpedo ese hombree a wan.</p>
+      </span>
+
+
+      <div id="menu">
+        <script type="text/javascript">
+
+        $('span').mouseup(function(){
+          //alert($(this).attr('id'));
+          name = $(this).attr('id');
+        });
+
+        </script>
+
+        <a href="#" id="simplify">
+          <i class="fa fa-hand-scissors-o" aria-hidden="true"></i> Simplify <span>Ctrl + ?!</span>
+        </a>
+        <hr />
+        <a href="#" id="citizenpedia">
+          <i class="fa fa-question" aria-hidden="true"></i> Citizenpedia <span>Ctrl + ?!</span>
+        </a>
+
+        <!-- <a href="#">
+          <i class="fa fa-fort-awesome"></i> Fort Awesome <span>Ctrl + ?!</span>
+        </a>
+        <a href="#">
+          <i class="fa fa-flag"></i> Font Awesome <span>Ctrl + ?!</span>
+        </a> -->
+      </div>
+
+    <script src="context.js"></script>
+
+    </body>
+</html>
