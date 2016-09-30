@@ -1,3 +1,21 @@
+var annotatedText = [];
+
+
+function checkButtons(name)
+{
+  simplifyValue = document.getElementById('simplifySwitch').value;
+  annotateValue = document.getElementById('annotateSwitch').value;
+
+  if (simplifyValue == "simplifyOn") {
+    simplify(name);
+  }
+
+  if(annotateValue == "annotateOn"){
+    annotate(name);
+  }
+}
+
+
 function simplify(name)
 {
   console.log("Desde dentro:"+name);
@@ -30,6 +48,26 @@ function simplify(name)
 
 }
 
+function annotate(name)
+{
+  console.log("Annotate "+name);
+  document.getElementById(name).innerHTML = document.getElementById(name).innerHTML +
+  '<span id="annotateGroup'+name+'"><textarea id="annotate" rows="4" cols="50">'+annotatedText[name]+'</textarea><input type="button" value="Send" id="sendAnnotate" onclick="sendAnnotate(\''+name+'\');"></span>';
+  document.getElementById("annotateSwitch").value="annotateOff";
+}
+
+
+function sendAnnotate(name)
+{
+  console.log("Send Annotate "+name);
+  annotatedText[name] = document.getElementById("annotate").value;
+
+  document.getElementById("annotateGroup"+name).style.display = "none";
+
+}
+
+
+// Buttons
 function switchSimplify()
 {
   currentvalue = document.getElementById('simplifySwitch').value;
@@ -40,4 +78,24 @@ function switchSimplify()
     console.log("ON->OFF");
     document.getElementById("simplifySwitch").value="simplifyOff";
   }
+}
+
+function switchAnnotate()
+{
+  simplifyValue = document.getElementById('simplifySwitch').value;
+  annotateValue = document.getElementById('annotateSwitch').value;
+
+  if (simplifyValue == "simplifyOn") {
+    document.getElementById("simplifySwitch").value="simplifyOff";
+  }
+
+  if(annotateValue == "annotateOff"){
+    console.log("OFF->ON");
+    document.getElementById("annotateSwitch").value="annotateOn";
+  }else{
+    console.log("ON->OFF");
+    document.getElementById("annotateSwitch").value="annotateOff";
+  }
+
+
 }
