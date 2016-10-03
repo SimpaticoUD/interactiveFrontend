@@ -51,6 +51,9 @@ function simplify(name)
 function annotate(name)
 {
   console.log("Annotate "+name);
+
+  if (annotatedText[name] == undefined) { annotatedText[name] = "Add note"};
+
   document.getElementById(name).innerHTML = document.getElementById(name).innerHTML +
   '<span id="annotateGroup'+name+'"><textarea id="annotate" rows="4" cols="50">'+annotatedText[name]+'</textarea><input type="button" value="Send" id="sendAnnotate" onclick="sendAnnotate(\''+name+'\');"></span>';
   document.getElementById("annotateSwitch").value="annotateOff";
