@@ -5,6 +5,7 @@ function checkButtons(name)
 {
   simplifyValue = document.getElementById('simplifySwitch').value;
   annotateValue = document.getElementById('annotateSwitch').value;
+  citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
 
   if (simplifyValue == "simplifyOn") {
     simplify(name);
@@ -12,6 +13,10 @@ function checkButtons(name)
 
   if(annotateValue == "annotateOn"){
     annotate(name);
+  }
+
+  if (citizenPediaValue == 'citizenPediaOn') {
+    citizenpedia(name);
   }
 }
 
@@ -59,7 +64,11 @@ function annotate(name)
   document.getElementById("annotateSwitch").value="annotateOff";
 }
 
-
+function citizenpedia(name)
+{
+  console.log("Citizenpedia "+name);
+  window.location.href = 'http://192.168.33.10:9000/questions/create';
+}
 function sendAnnotate(name)
 {
   console.log("Send Annotate "+name);
@@ -73,8 +82,19 @@ function sendAnnotate(name)
 // Buttons
 function switchSimplify()
 {
-  currentvalue = document.getElementById('simplifySwitch').value;
-  if(currentvalue == "simplifyOff"){
+  simplifyValue = document.getElementById('simplifySwitch').value;
+  annotateValue = document.getElementById('annotateSwitch').value;
+  citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
+
+  if (citizenPediaValue == "citizenPediaOn") {
+    document.getElementById("citizenPediaSwitch").value="citizenPediaOff";
+  }
+
+  if (annotateValue == "annotateOn") {
+    document.getElementById("annotateSwitch").value="annotateOff";
+  }
+
+  if(simplifyValue == "simplifyOff"){
     console.log("OFF->ON");
     document.getElementById("simplifySwitch").value="simplifyOn";
   }else{
@@ -87,9 +107,14 @@ function switchAnnotate()
 {
   simplifyValue = document.getElementById('simplifySwitch').value;
   annotateValue = document.getElementById('annotateSwitch').value;
+  citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
 
   if (simplifyValue == "simplifyOn") {
     document.getElementById("simplifySwitch").value="simplifyOff";
+  }
+
+  if (citizenPediaValue == "citizenPediaOn") {
+    document.getElementById("citizenPediaSwitch").value="citizenPediaOff";
   }
 
   if(annotateValue == "annotateOff"){
@@ -98,6 +123,32 @@ function switchAnnotate()
   }else{
     console.log("ON->OFF");
     document.getElementById("annotateSwitch").value="annotateOff";
+  }
+
+
+}
+
+function switchCitizenPedia()
+{
+  simplifyValue = document.getElementById('simplifySwitch').value;
+  annotateValue = document.getElementById('annotateSwitch').value;
+  citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
+
+
+  if (simplifyValue == "simplifyOn") {
+    document.getElementById("simplifySwitch").value="simplifyOff";
+  }
+
+  if (annotateValue == "annotateOn") {
+    document.getElementById("annotateSwitch").value="annotateOff";
+  }
+
+  if(citizenPediaValue == "citizenPediaOff"){
+    console.log("OFF->ON");
+    document.getElementById("citizenPediaSwitch").value="citizenPediaOn";
+  }else{
+    console.log("ON->OFF");
+    document.getElementById("citizenPediaSwitch").value="citizenPediaOff";
   }
 
 
