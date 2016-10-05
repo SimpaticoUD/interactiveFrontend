@@ -67,7 +67,7 @@ function annotate(name)
 function citizenpedia(name)
 {
   console.log("Citizenpedia "+name);
-  window.location.href = 'http://192.168.33.10:9000/questions/create';
+  window.location.href = 'http://asgard.deusto.es:52180/questions/create';
 }
 function sendAnnotate(name)
 {
