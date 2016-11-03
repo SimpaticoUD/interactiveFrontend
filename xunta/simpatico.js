@@ -8,6 +8,16 @@ function pageLoaded() {
     // Search for paragraphs
     paragraphs = document.getElementsByClassName("simp-text-paragraph");
 
+    //paragraphs.parrafo1.onclick = function() { checkButtons('parrafo1'); };
+
+      for (var i = 0, len = paragraphs.length; i < len; i++) {
+        console.log(paragraphs[i].id);
+        var paragraph = document.getElementById(paragraphs[i].id);
+        var paragraphName = paragraphs[i].id;
+        paragraph.onclick = function(paragraphName) { checkButtons(paragraphName); };
+      }
+
+
 }
 
 
@@ -18,15 +28,16 @@ function checkButtons(name)
   citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
 
   if (simplifyValue == "simplifyOn") {
-    simplify(name);
+    console.log("Log desde dentro "+name.currentTarget.id);
+    simplify(name.currentTarget.id);
   }
 
   if(annotateValue == "annotateOn"){
-    annotate(name);
+    annotate(name.currentTarget.id);
   }
 
   if (citizenPediaValue == 'citizenPediaOn') {
-    citizenpedia(name);
+    citizenpedia(name.currentTarget.id);
   }
 }
 
