@@ -1,4 +1,14 @@
 var annotatedText = [];
+var paragraphs =[];
+
+document.addEventListener('DOMContentLoaded', pageLoaded);
+
+function pageLoaded() {
+    console.log("Página cargada");
+    // Search for paragraphs
+    paragraphs = document.getElementsByClassName("simp-text-paragraph");
+
+}
 
 
 function checkButtons(name)
