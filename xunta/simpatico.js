@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', pageLoaded);
 
 function pageLoaded() {
     console.log("Página cargada");
+
+
     // Search for paragraphs
     paragraphs = document.getElementsByClassName("simp-text-paragraph");
 
@@ -71,7 +73,6 @@ function simplify(name)
       if (baconGoodness && baconGoodness.length > 0)
       {
         console.log(baconGoodness);
-        //jQuery('#'+name+'').html(baconGoodness);
         document.getElementById(name).innerHTML = "<p>" + baconGoodness + "</p>";
       }
     });
@@ -226,11 +227,21 @@ function switchDefine()
   }
 
   for (var t = 0, len = terms.length; t < len; t++) {
-    console.log("Term->"+terms[t].id);
-    var termHTML = document.getElementById(terms[t].id).innerHTML;
-    document.getElementById(terms[t].id).style["text-decoration"] = "underline";
-    document.getElementById(terms[t].id).innerHTML = '<div class="tooltip">'+termHTML+'<span class="tooltiptext">Tooltip text</span></div>';
+    termToChange = document.getElementById(terms[t].id);
+    var termHTML = termToChange.innerHTML;
 
+    //https://es.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch=DNI&srwhat=text&srlimit=2
+    jQuery.getJSON('http://baconipsum.com/api/?callback=?',
+      { 'type':'meat-and-filler', 'start-with-lorem':'1', 'sentences':'1' },
+      function(baconGoodness)
+    {
+      if (baconGoodness && baconGoodness.length > 0)
+      {
+        console.log(baconGoodness);
+        termToChange.style["text-decoration"] = "underline";
+        termToChange.innerHTML = '<div class="tooltip">'+termHTML+'<span class="tooltiptext">'+baconGoodness+'</span></div>';
+      }
+    });
   }
 
 
