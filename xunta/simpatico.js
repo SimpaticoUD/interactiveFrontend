@@ -8,14 +8,23 @@ function pageLoaded() {
     // Search for paragraphs
     paragraphs = document.getElementsByClassName("simp-text-paragraph");
 
+    terms = document.getElementsByClassName("simp-text-term");
     //paragraphs.parrafo1.onclick = function() { checkButtons('parrafo1'); };
 
       for (var i = 0, len = paragraphs.length; i < len; i++) {
-        console.log(paragraphs[i].id);
         var paragraph = document.getElementById(paragraphs[i].id);
         var paragraphName = paragraphs[i].id;
         paragraph.onclick = function(paragraphName) { checkButtons(paragraphName); };
       }
+
+      for (var t = 0, len = terms.length; t < len; t++) {
+        terms[t].setAttribute("id", "t"+t);
+        // var paragraph = document.getElementById(paragraphs[i].id);
+        // var paragraphName = paragraphs[i].id;
+        // paragraph.onclick = function(paragraphName) { checkButtons(paragraphName); };
+      }
+
+
 
 
 }
@@ -28,7 +37,6 @@ function checkButtons(name)
   citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
 
   if (simplifyValue == "simplifyOn") {
-    console.log("Log desde dentro "+name.currentTarget.id);
     simplify(name.currentTarget.id);
   }
 
@@ -106,6 +114,7 @@ function switchSimplify()
   simplifyValue = document.getElementById('simplifySwitch').value;
   annotateValue = document.getElementById('annotateSwitch').value;
   citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
+  defineValue = document.getElementById('defineSwitch').value;
 
   if (citizenPediaValue == "citizenPediaOn") {
     document.getElementById("citizenPediaSwitch").value="citizenPediaOff";
@@ -115,11 +124,15 @@ function switchSimplify()
     document.getElementById("annotateSwitch").value="annotateOff";
   }
 
+  if (defineValue == "defineOn") {
+    document.getElementById("defineSwitch").value="defineOff";
+  }
+
   if(simplifyValue == "simplifyOff"){
-    console.log("OFF->ON");
+    console.log("Switch OFF->ON");
     document.getElementById("simplifySwitch").value="simplifyOn";
   }else{
-    console.log("ON->OFF");
+    console.log("Switch ON->OFF");
     document.getElementById("simplifySwitch").value="simplifyOff";
   }
 }
@@ -129,6 +142,7 @@ function switchAnnotate()
   simplifyValue = document.getElementById('simplifySwitch').value;
   annotateValue = document.getElementById('annotateSwitch').value;
   citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
+  defineValue = document.getElementById('defineSwitch').value;
 
   if (simplifyValue == "simplifyOn") {
     document.getElementById("simplifySwitch").value="simplifyOff";
@@ -138,11 +152,15 @@ function switchAnnotate()
     document.getElementById("citizenPediaSwitch").value="citizenPediaOff";
   }
 
+  if (defineValue == "defineOn") {
+    document.getElementById("defineSwitch").value="defineOff";
+  }
+
   if(annotateValue == "annotateOff"){
-    console.log("OFF->ON");
+    console.log("Switch OFF->ON");
     document.getElementById("annotateSwitch").value="annotateOn";
   }else{
-    console.log("ON->OFF");
+    console.log("Switch ON->OFF");
     document.getElementById("annotateSwitch").value="annotateOff";
   }
 
@@ -154,6 +172,7 @@ function switchCitizenPedia()
   simplifyValue = document.getElementById('simplifySwitch').value;
   annotateValue = document.getElementById('annotateSwitch').value;
   citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
+  defineValue = document.getElementById('defineSwitch').value;
 
 
   if (simplifyValue == "simplifyOn") {
@@ -164,13 +183,56 @@ function switchCitizenPedia()
     document.getElementById("annotateSwitch").value="annotateOff";
   }
 
+  if (defineValue == "defineOn") {
+    document.getElementById("defineSwitch").value="defineOff";
+  }
+
   if(citizenPediaValue == "citizenPediaOff"){
-    console.log("OFF->ON");
+    console.log("Citizenpedia OFF->ON");
     document.getElementById("citizenPediaSwitch").value="citizenPediaOn";
   }else{
-    console.log("ON->OFF");
+    console.log("Citizenpedia ON->OFF");
     document.getElementById("citizenPediaSwitch").value="citizenPediaOff";
   }
+
+
+}
+
+function switchDefine()
+{
+  simplifyValue = document.getElementById('simplifySwitch').value;
+  annotateValue = document.getElementById('annotateSwitch').value;
+  citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
+  defineValue = document.getElementById('defineSwitch').value;
+
+  if (simplifyValue == "simplifyOn") {
+    document.getElementById("simplifySwitch").value="simplifyOff";
+  }
+
+  if (annotateValue == "annotateOn") {
+    document.getElementById("annotateSwitch").value="annotateOff";
+  }
+
+  if (citizenPediaValue == "citizenPediaOn") {
+    document.getElementById("citizenPediaSwitch").value="citizenPediaOff";
+  }
+
+  if(defineValue == "defineOff"){
+    console.log("Define OFF->ON");
+    document.getElementById("defineSwitch").value="defineOn";
+  }else{
+    console.log("Define ON->OFF");
+    document.getElementById("deineSwitch").value="defineOff";
+  }
+
+  for (var t = 0, len = terms.length; t < len; t++) {
+    console.log("Term->"+terms[t].id);
+    var termHTML = document.getElementById(terms[t].id).innerHTML;
+    document.getElementById(terms[t].id).style["text-decoration"] = "underline";
+    document.getElementById(terms[t].id).innerHTML = '<div class="tooltip">'+termHTML+'<span class="tooltiptext">Tooltip text</span></div>';
+
+  }
+
 
 
 }
