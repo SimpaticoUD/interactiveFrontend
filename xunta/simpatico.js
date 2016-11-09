@@ -14,6 +14,7 @@ function pageLoaded() {
     //paragraphs.parrafo1.onclick = function() { checkButtons('parrafo1'); };
 
       for (var i = 0, len = paragraphs.length; i < len; i++) {
+        paragraphs[i].setAttribute("id", "p"+i);
         var paragraph = document.getElementById(paragraphs[i].id);
         var paragraphName = paragraphs[i].id;
         paragraph.onclick = function(paragraphName) { checkButtons(paragraphName); };
@@ -240,16 +241,18 @@ function changeTooltip(termToChange)
 {
 
   var termHTML = termToChange.innerHTML;
+  var term = termToChange.innerText;
+  term = term.replace("(","");
+  term = term.replace(")","");
 
-  //https://es.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch=DNI&srwhat=text&srlimit=2
-
-  jQuery.getJSON('http://baconipsum.com/api/?callback=?',
-    { 'type':'meat-and-filler', 'start-with-lorem':'1', 'sentences':'1' },
-    function(baconGoodness)
+  jQuery.getJSON('http://192.168.33.10/wikiproxy.php?',
+    { 'term': term },
+    function(wikiResponse)
     {
-      console.log(termToChange);
+
+      var firstObject = wikiResponse.query.pages[Object.keys(wikiResponse.query.pages)[0]];
       termToChange.style["text-decoration"] = "underline";
-      termToChange.innerHTML = '<div class="tooltip">'+termHTML+'<span class="tooltiptext">'+baconGoodness+'</span></div>';
+      termToChange.innerHTML = '<div class="tooltip">'+termHTML+'<span class="tooltiptext">'+firstObject.title+'</span></div>';
 
     });
 
