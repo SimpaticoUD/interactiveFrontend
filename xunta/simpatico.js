@@ -245,7 +245,7 @@ function changeTooltip(termToChange)
   term = term.replace("(","");
   term = term.replace(")","");
 
-  jQuery.getJSON('http://192.168.33.10/wikiproxy.php?',
+  jQuery.getJSON('http://192.168.33.10/interactiveFrontend/wikiproxy.php?',
     { 'term': term },
     function(wikiResponse)
     {
