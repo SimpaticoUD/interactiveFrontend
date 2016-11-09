@@ -18,14 +18,15 @@ function pageLoaded() {
     //paragraphs.parrafo1.onclick = function() { checkButtons('parrafo1'); };
 
       for (var i = 0, len = paragraphs.length; i < len; i++) {
-        paragraphs[i].setAttribute("id", "p"+i);
+        paragraphs[i].setAttribute("id", "sp"+i);
         var paragraph = document.getElementById(paragraphs[i].id);
         var paragraphName = paragraphs[i].id;
-        paragraph.onclick = function(paragraphName) { checkButtons(paragraphName); };
+        paragraphs[i].setAttribute("onclick", "checkButtons('"+paragraphName+"');");
+        //paragraph.onclick = function(paragraphName) { checkButtons(paragraphName); };
       }
 
       for (var t = 0, len = terms.length; t < len; t++) {
-        terms[t].setAttribute("id", "t"+t);
+        terms[t].setAttribute("id", "st"+t);
         // var paragraph = document.getElementById(paragraphs[i].id);
         // var paragraphName = paragraphs[i].id;
         // paragraph.onclick = function(paragraphName) { checkButtons(paragraphName); };
@@ -44,15 +45,15 @@ function checkButtons(name)
   citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
 
   if (simplifyValue == "simplifyOn") {
-    simplify(name.currentTarget.id);
+    simplify(name);
   }
 
   if(annotateValue == "annotateOn"){
-    annotate(name.currentTarget.id);
+    annotate(name);
   }
 
   if (citizenPediaValue == 'citizenPediaOn') {
-    citizenpedia(name.currentTarget.id);
+    citizenpedia(name);
   }
 }
 
