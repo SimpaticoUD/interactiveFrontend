@@ -58,23 +58,23 @@ function simplify(name)
 
     switch (name) {
       case "sp0":
-        var textReplace = '<li>a) Copia compulsada do documento nacional de identidade <span class="simp-text-term">(DNI)</span> ou ben do pasaporte ou do número de identificación de estranxeiro <span class="simp-text-term">(NIE)</span>.	</li>';
+        var textReplace = '<li style="font-size: 1em; list-style: circle">a) Copia compulsada do documento nacional de identidade <span class="simp-text-term">(DNI)</span> ou ben do pasaporte ou do número de identificación de estranxeiro <span class="simp-text-term">(NIE)</span>.	</li>';
         break;
 
       case "sp1":
-        var textReplace = '<li>b) Copia do certificado de empadroamento, emitido polo concello correspondente.</li>';
+        var textReplace = '<li style="font-size: 1em; list-style: circle">b) Copia do certificado de empadroamento, emitido polo concello correspondente.</li>';
         break;
 
       case "sp2":
-        var textReplace = '<li>c) Copia da declaración do imposto da renda das persoas físicas correspondente ao último período en que se presente a solicitude.</li>';
+        var textReplace = '<li style="font-size: 1em; list-style: circle">c) Copia da declaración do imposto da renda das persoas físicas correspondente ao último período en que se presente a solicitude.</li>';
         break;
 
       case "sp3":
-        var textReplace = '<li>d) Copia do libro de familia da persoa solicitante no caso de queira acudir ao programa.	</li>';
+        var textReplace = '<li style="font-size: 1em; list-style: circle">d) Copia do libro de familia da persoa solicitante no caso de queira acudir ao programa.	</li>';
         break;
 
       case "sp4":
-        var textReplace = '<li>e) Certificado do grao de discapacidade do fillo ou filla da persoa solicitante, de la <span class="simp-text-term">Xunta</span> de Galicia.</li>';
+        var textReplace = '<li style="font-size: 1em; list-style: circle">e) Certificado do grao de discapacidade do fillo ou filla da persoa solicitante, de la <span class="simp-text-term">Xunta</span> de Galicia.</li>';
         break;
 
       default:
@@ -151,7 +151,7 @@ function switchSimplify()
         paragraphs[i].setAttribute("onclick", "checkButtons('"+paragraphName+"');");
         //paragraph.onclick = function(paragraphName) { checkButtons(paragraphName); };
       }
-      
+
   }else{
     console.log("Switch ON->OFF");
     document.getElementById("simplifySwitch").value="simplifyOff";
