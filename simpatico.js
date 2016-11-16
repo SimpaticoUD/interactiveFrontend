@@ -58,25 +58,16 @@ function checkButtons(name)
 
 function simplify(name)
 {
-  console.log("Desde dentro:"+name);
-
-  //var changedText = "Texto Simplificado para "+name;
-
   simplifyValue = document.getElementById('simplifySwitch').value;
 
-  console.log(simplifyValue);
 
-  if (simplifyValue == "simplifyOff") {
-    console.log("No simplify");
-  }else {
-    console.log("simplifying");
+  if (simplifyValue != "simplifyOff") {
     jQuery.getJSON('http://baconipsum.com/api/?callback=?',
       { 'type':'meat-and-filler', 'start-with-lorem':'1', 'paras':'1' },
       function(baconGoodness)
     {
       if (baconGoodness && baconGoodness.length > 0)
       {
-        console.log(baconGoodness);
         document.getElementById(name).innerHTML = "<p>" + baconGoodness + "</p>";
       }
     });
@@ -89,7 +80,6 @@ function simplify(name)
 
 function annotate(name)
 {
-  console.log("Annotate "+name);
 
   if (annotatedText[name] == undefined) { annotatedText[name] = "Add note"};
 
@@ -100,12 +90,10 @@ function annotate(name)
 
 function citizenpedia(name)
 {
-  console.log("Citizenpedia "+name);
   window.location.href = 'http://asgard.deusto.es:52180/questions/create';
 }
 function sendAnnotate(name)
 {
-  console.log("Send Annotate "+name);
   annotatedText[name] = document.getElementById("annotate").value;
 
   document.getElementById("annotateGroup"+name).style.display = "none";
@@ -134,10 +122,8 @@ function switchSimplify()
   }
 
   if(simplifyValue == "simplifyOff"){
-    console.log("Switch OFF->ON");
     document.getElementById("simplifySwitch").value="simplifyOn";
   }else{
-    console.log("Switch ON->OFF");
     document.getElementById("simplifySwitch").value="simplifyOff";
   }
 }
@@ -162,10 +148,8 @@ function switchAnnotate()
   }
 
   if(annotateValue == "annotateOff"){
-    console.log("Switch OFF->ON");
     document.getElementById("annotateSwitch").value="annotateOn";
   }else{
-    console.log("Switch ON->OFF");
     document.getElementById("annotateSwitch").value="annotateOff";
   }
 
@@ -193,10 +177,8 @@ function switchCitizenPedia()
   }
 
   if(citizenPediaValue == "citizenPediaOff"){
-    console.log("Citizenpedia OFF->ON");
     document.getElementById("citizenPediaSwitch").value="citizenPediaOn";
   }else{
-    console.log("Citizenpedia ON->OFF");
     document.getElementById("citizenPediaSwitch").value="citizenPediaOff";
   }
 
@@ -223,10 +205,8 @@ function switchDefine()
   }
 
   if(defineValue == "defineOff"){
-    console.log("Define OFF->ON");
     document.getElementById("defineSwitch").value="defineOn";
   }else{
-    console.log("Define ON->OFF");
     document.getElementById("defineSwitch").value="defineOff";
   }
 
