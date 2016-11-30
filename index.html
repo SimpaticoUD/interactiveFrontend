@@ -24,6 +24,64 @@
 <body class=" controls-visible public-page">
 <!-- SIMPATICO BEGIN -->
 <div id="simpatico_top"></div>
+
+<!-- SIMPATICO-BEGIN -->
+<script type="text/javascript">
+  function handleClientLoad() {
+    // Load the API client and auth2 library
+    gapi.load('client:auth2', initClient);
+  }
+
+  function initClient() {
+    gapi.client.init({
+        apiKey: 'AIzaSyABSlDxVQ1yv_4kGEMcazYMu-X3NJg8yZA',
+        discoveryDocs: ["https://people.googleapis.com/$discovery/rest?version=v1"],
+        clientId: '167570783497-frbg9dr5da757u3a35rln8elrak51euj.apps.googleusercontent.com',
+        scope: 'profile'
+    }).then(function () {
+      // Listen for sign-in state changes.
+      gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+      // Handle the initial sign-in state.
+      updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    });
+  }
+
+  function updateSigninStatus(isSignedIn) {
+    if (isSignedIn) {
+      makeApiCall();
+    }
+  }
+
+  function handleAuthClick(event) {
+    gapi.auth2.getAuthInstance().signIn();
+  }
+
+  function handleSignoutClick(event) {
+    gapi.auth2.getAuthInstance().signOut();
+    document.getElementById('loginButton').value = 'login';
+    document.getElementById('signout-button').style = "display:none";
+  }
+
+  function makeApiCall() {
+    gapi.client.people.people.get({
+      resourceName: 'people/me'
+    }).then(function(resp) {
+      document.getElementById('loginButton').value = 'Hello, ' + resp.result.names[0].givenName;
+      document.getElementById('signout-button').style = "display:block";
+    }, function(reason) {
+      console.log('Error: ' + reason.result.error.message);
+    });
+  }
+</script>
+<script async defer src="https://apis.google.com/js/api.js"
+  onload="this.onload=function(){};handleClientLoad()"
+  onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
+
+<!-- SIMPATICO-END -->
+
+
 <!-- SIMPATICO END -->
 <div id="wrapper">
     <div id="menuSuperior" class="fila">
@@ -95,5 +153,6 @@ Est&aacute;s en:
 <div class="capaPrazo redondo5">	<div class="prazo redondo5T">	        	<p class="pechado">	        	Prazo de presentación pechado	        	                	<span class="data">(17/02/2016 - 07/03/2016)</span>	                </p>	                	</div><div class="accesos redondo5B">	<p>Tramitación en liña</p>	<div class="ligazons fila">	  	    	 	    	    	<a class="inicioSolicitude sinCentrar" id="inicioSolicitudeLateralPDF" href="https://sede.xunta.es/solicitudes/presentacion/generarSolicitudes.do?codCons=BS&amp;codProc=607A&amp;procedemento=BS607A&amp;request_locale=gl" title="Iniciar presentación electrónica na sede" target="_new">Iniciar presentación electrónica na sede</a>	<script type="text/javascript">/*<![CDATA[*/jQuery("#inicioSolicitudeLateralPDF").click(function(){if(navegadorPDF!=null){jQuery("#botonContinuar_PDF").attr("href",jQuery("#inicioSolicitudeLateralPDF").attr("href"));jQuery("#dialog_modal_AvisoPDF").removeClass("noveo");jQuery("#dialog_modal_AvisoPDF").dialog({width:400,height:200,resizable:false,modal:true});jQuery(".ui-dialog-overlay").css("opacity","0.5");return false}else{return true}});/*]]>*/</script></div><div class="separador"></div><p>Tramitación presencial</p>	<div class="ligazons fila">	<a class="descargaSolicitude" href="http://www.xunta.es/formularios/generarPlantillaPDF?conselleria=BS&amp;procedimiento=607A&amp;version=0.0&amp;idioma=gl_ES" title="Ir a Modelo de solicitude" target="_new">Modelo de solicitude </a>	</div></div></div><div id="infointerese">&nbsp;</div><div class="listadoFicha redondo5">	<h2 class="redondo5T">Procedementos relacionados</h2>	<ul>	<li><a href="https://sede.xunta.es/detalle-procedemento?codCons=BS&amp;codProc=304A&amp;procedemento=BS304A" onclick="__utmTrackEvent('listadoProcedemento','ProcedementoListadoBusqueda','BS304A Concerto con entidades xuvenís e outras entidades públicas ou privadas, para o uso de campamentos e albergues xuvenís da administración galega.');"><span class="codigo">BS304A</span> Concerto con entidades xuvenís e outras entidades públicas ou privadas, para o uso de campamentos e albergues xuvenís da administración galega.</a></li><li><a href="https://sede.xunta.es/detalle-procedemento?codCons=BS&amp;codProc=605A&amp;procedemento=BS605A" onclick="__utmTrackEvent('listadoProcedemento','ProcedementoListadoBusqueda','BS605A Solicitude de estancias temporais nos servizos prestados en centros propios ou concertados, no ámbito da atención á dependencia e da promoción da autonomía persoal.');"><span class="codigo">BS605A</span> Solicitude de estancias temporais nos servizos prestados en centros propios ou concertados, no ámbito da atención á dependencia e da promoción da autonomía persoal.</a></li><li><a href="https://sede.xunta.es/detalle-procedemento?codCons=BS&amp;codProc=650A&amp;procedemento=BS650A" onclick="__utmTrackEvent('listadoProcedemento','ProcedementoListadoBusqueda','BS650A Pensión de invalidez non contributiva de invalidez (PNC).');"><span class="codigo">BS650A</span> Pensión de invalidez non contributiva de invalidez (PNC).</a></li></ul></div></div></div><script type="text/javascript">/*<![CDATA[*/Liferay.Portlet.onLoad({canEditTitle:false,columnPos:1,isStatic:"end",namespacedId:"p_p_id\u005f\u0072\u0065\u0073\u0075\u006c\u0074\u0061\u0064\u006f\u0042\u0075\u0073\u0063\u0061\u005f\u0057\u0041\u0052\u005f\u0047\u0053\u0041\u0053\u0065\u0061\u0072\u0063\u0068\u005f",portletId:"\u0072\u0065\u0073\u0075\u006c\u0074\u0061\u0064\u006f\u0042\u0075\u0073\u0063\u0061\u005f\u0057\u0041\u0052\u005f\u0047\u0053\u0041\u0053\u0065\u0061\u0072\u0063\u0068"});/*]]>*/</script></div></div></div></div></div><form action="detalle-procedemento@codCons=BS&amp;codProc=607A.html" method="post" name="hrefFm"></form><div id="bandaFeder" class="fila">	<a target="_self" title="Ir a Fondo Europeo de desenvolvemento rexional" href="http://www.xunta.es/feder">  	<img alt="Fondo Europeo de desenvolvemento rexional" src="https://sede.xunta.es/tema-sede-electronica/images/fondos/feder.png"/>	</a>	</div><div id="footer" class="fila">
     	<div class="clearfix" id="copyright">
         	<a title="Xunta de Galicia - Inicio" href="http://www.xunta.es/portada"><img alt="Xunta de Galicia" src="https://sede.xunta.es/tema-sede-electronica/images/logoXuntaPe.png"/></a>
-            <div>	<p>	&copy; Xunta de Galicia. Información mantida e publicada na internet pola Xunta de Galicia</p>	<ul>	<li>	<a href="http://www.xunta.es/oficina-de-rexistro-unico-e-informacion" title="Oficina de Rexistro e Información">Oficina de Rexistro e Información</a></li><li>	<span>|</span>	</li><li>	<a title="Suxestións e queixas" href="http://www.xunta.es/suxestions-e-queixas">Suxestións e queixas</a>  	</li><li>	<span>|</span>	</li><li>	<a title="Aviso legal" href="https://sede.xunta.es/aviso-legal">Aviso legal</a>  	</li><li>	<span>|</span>	</li><li>	<a href="http://www.xunta.es/atendemolo" title="Atendémolo/a" accesskey="3">Atendémolo/a</a> 	</li><li>	<span>|</span>	</li><li>	<a title="Protección de datos" href="https://sede.xunta.es/proteccion-de-datos">Protección de datos</a> 	</li></ul></div></div><div id="logoGalicia">	<a href="http://www.turgalicia.es/" title="Ir a Turismo de Galicia">	<img src="https://sede.xunta.es/tema-sede-electronica/images/fondos/galicia.png" alt="Turismo de Galicia"/> 	</a>	</div></div></div><form name="alto_contraste_pie" id="alto_contraste_pie" action="https://sede.xunta.es/portada"><input type="hidden" name="title" value="BS607A - Programa Benestar en Balnearios."/></form><script id="mainLiferayThemeJavaScript" src="https://sede.xunta.es/tema-sede-electronica/javascript/javascript.js?browserId=other&amp;minifierType=js&amp;t=1467307178000" type="text/javascript"></script><script src="https://sede.xunta.es/tema-sede-electronica/javascript/javascript.js?browserId=other&amp;minifierType=js&amp;t=1467307178000" type="text/javascript"></script><script type="text/javascript">/*<![CDATA[*/null;null;null;/*]]>*/</script></body>
+            <div>	<p>	&copy; Xunta de Galicia. Información mantida e publicada na internet pola Xunta de Galicia</p>	<ul>	<li>	<a href="http://www.xunta.es/oficina-de-rexistro-unico-e-informacion" title="Oficina de Rexistro e Información">Oficina de Rexistro e Información</a></li><li>	<span>|</span>	</li><li>	<a title="Suxestións e queixas" href="http://www.xunta.es/suxestions-e-queixas">Suxestións e queixas</a>  	</li><li>	<span>|</span>	</li><li>	<a title="Aviso legal" href="https://sede.xunta.es/aviso-legal">Aviso legal</a>  	</li><li>	<span>|</span>	</li><li>	<a href="http://www.xunta.es/atendemolo" title="Atendémolo/a" accesskey="3">Atendémolo/a</a> 	</li><li>	<span>|</span>	</li><li>	<a title="Protección de datos" href="https://sede.xunta.es/proteccion-de-datos">Protección de datos</a> 	</li></ul></div></div><div id="logoGalicia">	<a href="http://www.turgalicia.es/" title="Ir a Turismo de Galicia">	<img src="https://sede.xunta.es/tema-sede-electronica/images/fondos/galicia.png" alt="Turismo de Galicia"/> 	</a>	</div></div></div><form name="alto_contraste_pie" id="alto_contraste_pie" action="https://sede.xunta.es/portada"><input type="hidden" name="title" value="BS607A - Programa Benestar en Balnearios."/></form><script id="mainLiferayThemeJavaScript" src="https://sede.xunta.es/tema-sede-electronica/javascript/javascript.js?browserId=other&amp;minifierType=js&amp;t=1467307178000" type="text/javascript"></script><script src="https://sede.xunta.es/tema-sede-electronica/javascript/javascript.js?browserId=other&amp;minifierType=js&amp;t=1467307178000" type="text/javascript"></script><script type="text/javascript">/*<![CDATA[*/null;null;null;/*]]>*/</script>
+          </body>
 </html>
