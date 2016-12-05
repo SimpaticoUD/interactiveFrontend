@@ -126,11 +126,11 @@ function switchSimplify()
     document.getElementById("defineSwitch").value="defineOff";
   }
 
+  // Search for paragraphs
+  paragraphs = document.getElementsByClassName("simp-text-paragraph");
+
   if(simplifyValue == "simplifyOff"){
     document.getElementById("simplifySwitch").value="simplifyOn";
-
-    // Search for paragraphs
-    paragraphs = document.getElementsByClassName("simp-text-paragraph");
 
     //paragraphs.parrafo1.onclick = function() { checkButtons('parrafo1'); };
 
@@ -139,11 +139,16 @@ function switchSimplify()
         var paragraph = document.getElementById(paragraphs[i].id);
         var paragraphName = paragraphs[i].id;
         paragraphs[i].setAttribute("onclick", "checkButtons('"+paragraphName+"');");
+        paragraphs[i].style.borderLeft = "thick solid #0000FF";
         //paragraph.onclick = function(paragraphName) { checkButtons(paragraphName); };
       }
 
   }else{
     document.getElementById("simplifySwitch").value="simplifyOff";
+    for (var i = 0, len = paragraphs.length; i < len; i++) {
+      paragraphs[i].style.borderLeft = "none";
+      //paragraph.onclick = function(paragraphName) { checkButtons(paragraphName); };
+    }
   }
 }
 
