@@ -1,7 +1,9 @@
+var proxyURL = 'http://192.168.33.10';
+
 var annotatedText = [];
 var paragraphs =[];
 
-var buttons = ["simplify", "forms", "citizenpedia"];
+var buttons = ["simplify", "forms", "citizenpedia","login"];
 
 document.addEventListener('DOMContentLoaded', pageLoaded);
 
@@ -21,6 +23,7 @@ function pageLoaded() {
     simpaticoBarHtml += '</div>';
 
     document.getElementById("simpatico_top").innerHTML = simpaticoBarHtml;
+    document.getElementById("simpatico_top").innerHTML += '<style>.tooltip {position: relative;display: inline-block;border-bottom: 1px dotted black;}.tooltip .tooltiptext {visibility: hidden;width: 120px;background-color: #555;color: #fff;text-align: center;border-radius: 6px;padding: 5px 0;position: absolute;z-index: 1;bottom: 125%;left: 50%;margin-left: -60px;opacity: 0;transition: opacity 1s;}.tooltip .tooltiptext::after {content: "";position: absolute;top: 100%;left: 50%;margin-left: -5px;border-width: 5px;border-style: solid;border-color: #555 transparent transparent transparent;}.tooltip:active .tooltiptext {visibility: visible;opacity: 1;}</style>';
 
 }
 
@@ -30,13 +33,14 @@ function switchFunction(functionName)
   for (var i = 0; i < buttons.length; i++) {
     if (buttons[i] == functionName) {
       document.getElementById(buttons[i]+'Switch').style.backgroundColor = '#FFFF00';
-      document.getElementById(buttons[i]+'Switch').value = "pressed";
+      //document.getElementById(buttons[i]+'Switch').value = "pressed";
     }else{
       document.getElementById(buttons[i]+'Switch').style.backgroundColor = 'white';
-      document.getElementById(buttons[i]+'Switch').value = buttons[i]+"Switch";
+      //document.getElementById(buttons[i]+'Switch').value = buttons[i]+"Switch";
     }
   }
-
+  console.log("Calling switch"+functionName);
+  window["switch"+functionName]();
   // console.log("Inside switch "+functionName);
   // document.getElementById(functionName+'Switch').style.backgroundColor = '#FFFF00';
   // document.getElementById(functionName+'Switch').value = "pressed";
@@ -50,8 +54,6 @@ function switchFunction(functionName)
 function checkButtons(name)
 {
   simplifyValue = document.getElementById('simplifySwitch').value;
-  annotateValue = document.getElementById('annotateSwitch').value;
-  citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
 
   if (simplifyValue == "simplifyOn") {
     simplify(name);
@@ -115,7 +117,7 @@ function simplify(name)
 
   }
 
-
+  termsGetDefinition();
 
 }
 
@@ -143,24 +145,10 @@ function sendAnnotate(name)
 
 
 // Buttons
-function switchSimplify()
+function switchsimplify()
 {
+  console.log("inside switchsimplify");
   simplifyValue = document.getElementById('simplifySwitch').value;
-  annotateValue = document.getElementById('annotateSwitch').value;
-  citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
-  defineValue = document.getElementById('defineSwitch').value;
-
-  if (citizenPediaValue == "citizenPediaOn") {
-    document.getElementById("citizenPediaSwitch").value="citizenPediaOff";
-  }
-
-  if (annotateValue == "annotateOn") {
-    document.getElementById("annotateSwitch").value="annotateOff";
-  }
-
-  if (defineValue == "defineOn") {
-    document.getElementById("defineSwitch").value="defineOff";
-  }
 
   // Search for paragraphs
   paragraphs = document.getElementsByClassName("simp-text-paragraph");
@@ -185,6 +173,21 @@ function switchSimplify()
       paragraphs[i].style.borderLeft = "none";
       //paragraph.onclick = function(paragraphName) { checkButtons(paragraphName); };
     }
+  }
+  termsGetDefinition();
+}
+
+function termsGetDefinition()
+{
+  terms = document.getElementsByClassName("simp-text-term");
+
+  for (var t = 0, len = terms.length; t < len; t++) {
+    terms[t].setAttribute("id", "st"+t);
+  }
+
+  for (var t = 0, len = terms.length; t < len; t++) {
+    termToChange = document.getElementById(terms[t].id);
+    changeTooltip(termToChange);
   }
 }
 
@@ -245,46 +248,6 @@ function switchCitizenPedia()
 
 }
 
-function switchDefine()
-{
-  simplifyValue = document.getElementById('simplifySwitch').value;
-  annotateValue = document.getElementById('annotateSwitch').value;
-  citizenPediaValue = document.getElementById('citizenPediaSwitch').value;
-  defineValue = document.getElementById('defineSwitch').value;
-
-  if (simplifyValue == "simplifyOn") {
-    document.getElementById("simplifySwitch").value="simplifyOff";
-  }
-
-  if (annotateValue == "annotateOn") {
-    document.getElementById("annotateSwitch").value="annotateOff";
-  }
-
-  if (citizenPediaValue == "citizenPediaOn") {
-    document.getElementById("citizenPediaSwitch").value="citizenPediaOff";
-  }
-
-  if(defineValue == "defineOff"){
-    document.getElementById("defineSwitch").value="defineOn";
-  }else{
-    document.getElementById("defineSwitch").value="defineOff";
-  }
-
-  terms = document.getElementsByClassName("simp-text-term");
-
-  for (var t = 0, len = terms.length; t < len; t++) {
-    terms[t].setAttribute("id", "st"+t);
-  }
-
-  for (var t = 0, len = terms.length; t < len; t++) {
-    termToChange = document.getElementById(terms[t].id);
-    changeTooltip(termToChange);
-
-  }// FOR
-
-
-
-}
 
 function changeTooltip(termToChange)
 {
@@ -294,7 +257,7 @@ function changeTooltip(termToChange)
   term = term.replace("(","");
   term = term.replace(")","");
 
-  jQuery.getJSON('http://asgard.deusto.es:52080/interactiveFrontend/wikiproxy.php?',
+  jQuery.getJSON(proxyURL+'/interactiveFrontend/wikiproxy.php?',
     { 'term': term },
     function(wikiResponse)
     {
