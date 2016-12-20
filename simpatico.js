@@ -20,36 +20,57 @@ function pageLoaded() {
     for (var i = 0; i < buttons.length; i++) {
       console.log(buttons[i]);
       //simpaticoBarHtml += '<input style="bgcolor:white;" src="img/simplify.png" type="button" value="'+ buttons[i]+'Off" id="'+buttons[i]+'Switch" onclick="switchFunction(\''+buttons[i]+'\');">'
-      simpaticoBarHtml += '<button type="submit" id="'+buttons[i]+'Switch" value="'+ buttons[i]+'Off" style="border: 0; background: transparent" onclick="switchFunction(\''+buttons[i]+'\');"><img src="img/'+ buttons[i]+'.png" width="50" height="50" alt="submit" /></button>';
+      simpaticoBarHtml += '<button type="submit" id="'+buttons[i]+'Switch" value="'+ buttons[i]+'Off" style="visibility: hidden; border: 0; background: transparent" onclick="switchFunction(\''+buttons[i]+'\');"><img id="'+ buttons[i]+'img" src="img/'+ buttons[i]+'.png" width="50" height="50" alt="submit" /></button>';
     }
+
+    simpaticoBarHtml += '<div id="userdata"></div>';
 
     simpaticoBarHtml += '</div>';
 
     document.getElementById("simpatico_top").innerHTML = simpaticoBarHtml;
     document.getElementById("simpatico_top").innerHTML += '<style>.tooltip {position: relative;display: inline-block;border-bottom: 1px dotted black;}.tooltip .tooltiptext {visibility: hidden;width: 120px;background-color: #555;color: #fff;text-align: center;border-radius: 6px;padding: 5px 0;position: absolute;z-index: 1;bottom: 125%;left: 50%;margin-left: -60px;opacity: 0;transition: opacity 1s;}.tooltip .tooltiptext::after {content: "";position: absolute;top: 100%;left: 50%;margin-left: -5px;border-width: 5px;border-style: solid;border-color: #555 transparent transparent transparent;}.tooltip:active .tooltiptext {visibility: visible;opacity: 1;}</style>';
     document.getElementById("loginSwitch").style.float = "right";
+    document.getElementById("loginSwitch").style.visibility = "visible";
 
 }
 
+
+function showButtons()
+{
+  for (var i = 0; i < buttons.length; i++) {
+    document.getElementById(buttons[i]+'Switch').style.visibility = "visible";
+  }
+}
+
+function hideButtons()
+{
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i] != "login") {
+        document.getElementById(buttons[i]+'Switch').style.visibility = "hidden";
+    }
+
+  }
+}
 
 function switchFunction(functionName)
 {
 
-  for (var i = 0; i < buttons.length; i++) {
-    document.getElementById(buttons[i]+"Switch").style.borderLeft = "none";
-    if (buttons[i] === functionName) {
-        document.getElementById(functionName+"Switch").style.borderLeft = "thick solid #0000FF";
+  if (functionName == "login") {
+    handleAuthClick();
+  } else {
+    for (var i = 0; i < buttons.length; i++) {
+      document.getElementById(buttons[i]+"Switch").style.borderLeft = "none";
+      if (buttons[i] === functionName) {
+          document.getElementById(functionName+"Switch").style.borderLeft = "thick solid #0000FF";
+      }
+
     }
+    window["switch"+functionName]();
 
   }
 
-  console.log("Calling "+"switch"+functionName);
-  window["switch"+functionName]();
+
 }
-
-
-///////// OLD
-
 
 function simplify(name)
 {
@@ -198,7 +219,6 @@ function switchcitizenpedia()
 
 function termsGetDefinition()
 {
-  console.log("inside termsGetDefinition");
   terms = document.getElementsByClassName("simp-text-term");
 
   for (var t = 0, len = terms.length; t < len; t++) {
@@ -227,9 +247,16 @@ function changeTooltip(termToChange)
 
       var firstObject = wikiResponse.query.pages[Object.keys(wikiResponse.query.pages)[0]];
       termToChange.style["text-decoration"] = "underline";
-      termToChange.innerHTML = '<div class="tooltip">'+termHTML+'<span class="tooltiptext">'+firstObject.title+'</span></div>';
+      termToChange.innerHTML = '<div class="tooltip" onclick="cancelClick(event);">'+termHTML+'<span class="tooltiptext">'+firstObject.title+'</span></div>';
 
     });
 
 
+}
+
+function cancelClick(e)
+{
+  if (!e) var e = window.event;
+  e.cancelBubble = true;
+  if (e.stopPropagation) e.stopPropagation();
 }

@@ -59,16 +59,22 @@
 
   function handleSignoutClick(event) {
     gapi.auth2.getAuthInstance().signOut();
-    document.getElementById('loginButton').value = 'login';
-    document.getElementById('signout-button').style = "display:none";
+    document.getElementById('loginimg').src = "img/login.png";
+    document.getElementById('loginSwitch').setAttribute("onclick", "switchFunction('login');");
+    document.getElementById('userdata').innerHTML = "";
+    hideButtons();
+
   }
 
   function makeApiCall() {
     gapi.client.people.people.get({
       resourceName: 'people/me'
     }).then(function(resp) {
-      document.getElementById('loginButton').value = 'Hello, ' + resp.result.names[0].givenName;
-      document.getElementById('signout-button').style = "display:block";
+      document.getElementById('userdata').innerHTML = 'Hello, ' + resp.result.names[0].givenName;
+      document.getElementById('userdata').style = "display:block";
+      document.getElementById('loginimg').src = "img/ic_on.png";
+      document.getElementById('loginSwitch').setAttribute("onclick", "handleSignoutClick()");
+      showButtons();
     }, function(reason) {
       console.log('Error: ' + reason.result.error.message);
     });
