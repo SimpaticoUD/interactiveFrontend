@@ -1,9 +1,11 @@
-var proxyURL = 'http://asgard.deusto.es:52080/';
+var proxyURL = 'https://simpatico.morelab.deusto.es/';
 
 var annotatedText = [];
 var paragraphs =[];
 
 var buttons = ["simplify", "forms", "citizenpedia","login"];
+
+var savedParagraph;
 
 document.addEventListener('DOMContentLoaded', pageLoaded);
 
@@ -51,6 +53,9 @@ function switchFunction(functionName)
 
 function simplify(name)
 {
+    savedParagraph = document.getElementById(name).innerHTML;
+
+    document.getElementById(name).style.borderBottom = "thick solid #0000FF";
 
     switch (name) {
       case "sp0":
@@ -85,13 +90,16 @@ function simplify(name)
 
 
     //document.getElementById(name).style.visibility='hidden';
+
+    document.getElementById(name).setAttribute("onclick", "closeSimp(\'"+document.getElementById(name).id+"\')");
+
     fade(document.getElementById(name), textReplace, unfade);
 
     //document.getElementById(name).parentNode.appendChild(clonedDiv);
     //document.getElementById(name).parentNode.replaceChild(clonedDiv, document.getElementById(name));
 
 
-    //termsGetDefinition();
+    termsGetDefinition();
 
 }
 
@@ -114,8 +122,9 @@ function fade(element, text, callback) {
 }
 
 function unfade(element,text) {
-  console.log("unfade");
+
     element.innerHTML = text;
+
     var op = 0.1;  // initial opacity
     element.style.display = 'block';
     var timer = setInterval(function () {
@@ -128,24 +137,20 @@ function unfade(element,text) {
     }, 10);
 }
 
-function closeSimp()
+function closeSimp(name)
 {
-  console.log("cerrando");
+  document.getElementById(name).setAttribute("onclick", "simplify('"+name+"');");
+  document.getElementById(name).style.borderBottom = "none";
+  fade(document.getElementById(name), savedParagraph, unfade);
+  termsGetDefinition();
+
+
 }
 
 function citizenpedia(name)
 {
   window.location.href = 'http://asgard.deusto.es:52180/questions/create';
 }
-
-function sendAnnotate(name)
-{
-  annotatedText[name] = document.getElementById("annotate").value;
-
-  document.getElementById("annotateGroup"+name).style.display = "none";
-
-}
-
 
 // Buttons
 function switchsimplify()
