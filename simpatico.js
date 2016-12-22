@@ -19,8 +19,6 @@ function pageLoaded() {
     simpaticoBarHtml = '<div id="simpatico_bar" style="background-color:#d3d3d6; position: fixed; top:0; width: 100%; z-index: 999;"> <img src="logo.png" height="50" width="50" alt="Simpatico" />';
 
     for (var i = 0; i < buttons.length; i++) {
-      console.log(buttons[i]);
-      //simpaticoBarHtml += '<input style="bgcolor:white;" src="img/simplify.png" type="button" value="'+ buttons[i]+'Off" id="'+buttons[i]+'Switch" onclick="switchFunction(\''+buttons[i]+'\');">'
       simpaticoBarHtml += '<button type="submit" id="'+buttons[i]+'Switch" value="'+ buttons[i]+'Off" style="visibility: hidden; border: 0; background: transparent" onclick="switchFunction(\''+buttons[i]+'\');"><img id="'+ buttons[i]+'img" src="img/'+ buttons[i]+'.png" width="50" height="50" alt="submit" /></button>';
     }
 
@@ -132,7 +130,6 @@ function simplify(name)
 }
 
 function fadeOut(element, textReplace) {
-  console.log("fadeOut");
     var left = 10;
     var op = 1;  // initial opacity
     var timer = setInterval(function () {
@@ -164,7 +161,6 @@ function fadeOut(element, textReplace) {
 }
 
 function fadeIn(element, savedParagraph) {
-  console.log("fadeOut");
     var left = 10;
     var op = 1;  // initial opacity
     var timer = setInterval(function () {
@@ -209,7 +205,7 @@ function closeSimp(name)
 // Buttons
 function switchsimplify()
 {
-  console.log("inside switchsimplify");
+  closeCitizenpedia();
   simplifyValue = document.getElementById('simplifySwitch').value;
 
   // Search for paragraphs
@@ -252,7 +248,6 @@ function switchforms()
 
 function switchcitizenpedia()
 {
-  console.log("switchcitizenpedia");
   if (document.getElementById('simplifySwitch').value == "simplifyOn") {
       switchFunction("simplify");
   }
@@ -262,7 +257,6 @@ function switchcitizenpedia()
   }
 
   for (var i = 0, len = paragraphs.length; i < len; i++) {
-    console.log("tema");
     paragraphs[i].setAttribute("id", "sp"+i);
     var paragraph = document.getElementById(paragraphs[i].id);
     var paragraphName = paragraphs[i].id;
@@ -277,33 +271,43 @@ function switchcitizenpedia()
 
 function citizenpedia(name)
 {
-  console.log("citizenpedia "+name);
+  var myElem = document.getElementById(name + "_questions");
 
-  // Create questions div
-  var questionsDiv = document.createElement('div');
-  questionsDiv.id=name + "_questions";
-  questionsDiv.style.borderLeft = "thick solid " + functionsColors["citizenpedia"];
-  questionsDiv.style.borderTop = "thick solid " + functionsColors["citizenpedia"];
-  questionsDiv.style.backgroundColor = "#a9a7a7";
+  if (myElem === null) {
+    // Create questions div
+    var questionsDiv = document.createElement('div');
+    questionsDiv.id=name + "_questions";
+    questionsDiv.className="citizenpedia_questions";
+    questionsDiv.style.borderLeft = "thick solid " + functionsColors["citizenpedia"];
+    questionsDiv.style.borderTop = "thick solid " + functionsColors["citizenpedia"];
+    questionsDiv.style.backgroundColor = "#a9a7a7";
 
-  questionsHtml = "QUESTIONS:<ul>";
+    questionsHtml = "QUESTIONS RELATING THIS:<ul>";
 
-  jQuery.getJSON(proxyURL+'/interactiveFrontend/questions.json',
-    function(jsonResponse)
-    {
-      for (var q = 0; q < Object.keys(jsonResponse.questions).length; q++) {
-        //console.log(Object.values(jsonResponse.questions)[q]);
-        //console.log("<li><a href=\""+ Object.values(jsonResponse.questions)[q].url + "\">" + Object.values(jsonResponse.questions)[q].title + "</a></li>");
-        questionsHtml += "<li><a href=\""+ Object.values(jsonResponse.questions)[q].url + "\">" + Object.values(jsonResponse.questions)[q].title + "</a></li>";
+    jQuery.getJSON(proxyURL+'interactiveFrontend/questions.json',
+      function(jsonResponse)
+      {
+        for (var q = 0; q < Object.keys(jsonResponse.questions).length; q++) {
+          questionsHtml += "<li onclick=\"cancelClick(event);\"><a href=\""+ Object.values(jsonResponse.questions)[q].url + "\">" + Object.values(jsonResponse.questions)[q].title + "</a></li>";
 
-      }
-      questionsHtml += "<li><a href=\"http://www.google.es\">Add New Question</a></li>";
-      questionsHtml += "</ul>";
-      questionsDiv.innerHTML = questionsHtml;
-      document.getElementById(name).appendChild(questionsDiv);
-    });
+        }
+        questionsHtml += "<li onclick=\"cancelClick(event);\"><a href=\"http://asgard.deusto.es:52180/questions/create\">Add New Question</a></li>";
+        questionsHtml += "</ul>";
+        questionsDiv.innerHTML = questionsHtml;
+        document.getElementById(name).appendChild(questionsDiv);
+      });
 
-  //window.location.href = 'http://asgard.deusto.es:52180/questions/create';
+  }
+
+}//citizenpedia
+
+function closeCitizenpedia()
+{
+  var questionDivs = document.getElementsByClassName("citizenpedia_questions");
+
+  for (var i = 0; i < questionDivs.length; i++) {
+    document.getElementById(questionDivs[i].id).parentNode.removeChild(document.getElementById(questionDivs[i].id));
+  }
 }
 
 /////////////////////////////////// CITIZENPEDIA
