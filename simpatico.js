@@ -256,14 +256,16 @@ function switchcitizenpedia()
     paragraphs = document.getElementsByClassName("simp-text-paragraph");
   }
 
+  var paragrapId = 1;
   for (var i = 0, len = paragraphs.length; i < len; i++) {
-    paragraphs[i].setAttribute("id", "sp"+i);
+    paragraphs[i].setAttribute("id", "Paragraph"+paragrapId);
     var paragraph = document.getElementById(paragraphs[i].id);
     var paragraphName = paragraphs[i].id;
     paragraphs[i].style.position='relative';
     paragraphs[i].setAttribute("onclick", "citizenpedia('"+paragraphName+"');");
     paragraphs[i].style.borderLeft = "thick solid " + functionsColors["citizenpedia"];
     //paragraph.onclick = function(paragraphName) { checkButtons(paragraphName); };
+    paragrapId++;
   }
 
 
@@ -282,16 +284,16 @@ function citizenpedia(name)
     questionsDiv.style.borderTop = "thick solid " + functionsColors["citizenpedia"];
     questionsDiv.style.backgroundColor = "#a9a7a7";
 
-    questionsHtml = "QUESTIONS RELATING THIS:<ul>";
+    questionsHtml = "RELATED QUESTIONS:<ul>";
 
-    jQuery.getJSON(proxyURL+'interactiveFrontend/questions.json',
+    jQuery.getJSON(proxyURL+'/citizenpedia/api/qae/questions/'+simpaticoEservice+'/'+name,
       function(jsonResponse)
       {
-        for (var q = 0; q < Object.keys(jsonResponse.questions).length; q++) {
-          questionsHtml += "<li onclick=\"cancelClick(event);\"><a href=\""+ Object.values(jsonResponse.questions)[q].url + "\">" + Object.values(jsonResponse.questions)[q].title + "</a></li>";
+        for (var q = 0; q < Object.keys(jsonResponse).length; q++) {
+          questionsHtml += "<li onclick=\"cancelClick(event);\"><a href=\""+ proxyURL + "citizenpedia/questions/show/"+Object.values(jsonResponse)[q]._id + "\">" + Object.values(jsonResponse)[q].title + "</a></li>";
 
         }
-        questionsHtml += "<li onclick=\"cancelClick(event);\"><a href=\"http://asgard.deusto.es:52180/questions/create\">Add New Question</a></li>";
+        questionsHtml += "<li onclick=\"cancelClick(event);\"><a href=\"https://simpatico.morelab.deusto.es/citizenpedia/questions/create\">Add New Question</a></li>";
         questionsHtml += "</ul>";
         questionsDiv.innerHTML = questionsHtml;
         document.getElementById(name).appendChild(questionsDiv);
@@ -305,8 +307,10 @@ function closeCitizenpedia()
 {
   var questionDivs = document.getElementsByClassName("citizenpedia_questions");
 
-  for (var i = 0; i < questionDivs.length; i++) {
-    document.getElementById(questionDivs[i].id).parentNode.removeChild(document.getElementById(questionDivs[i].id));
+  if (questionDivs.length>0) {
+    for (var i = 0; i <= questionDivs.length; i++) {
+      document.getElementById(questionDivs[i].id).parentNode.removeChild(document.getElementById(questionDivs[i].id));
+    }
   }
 }
 
