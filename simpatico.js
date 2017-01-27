@@ -318,6 +318,7 @@ function closeCitizenpedia()
 
 function termsGetDefinition()
 {
+  console.log("termsGetDefinition");
   terms = document.getElementsByClassName("simp-text-term");
 
   for (var t = 0, len = terms.length; t < len; t++) {
@@ -333,20 +334,17 @@ function termsGetDefinition()
 
 function changeTooltip(termToChange)
 {
-
   var termHTML = termToChange.innerHTML;
   var term = termToChange.innerText;
   term = term.replace("(","");
   term = term.replace(")","");
 
-  jQuery.getJSON(proxyURL+'/interactiveFrontend/wikiproxy.php?',
-    { 'term': term },
+  jQuery.getJSON(proxyURL+'/citizenpedia/api/terms/'+ term,
     function(wikiResponse)
     {
-
-      var firstObject = wikiResponse.query.pages[Object.keys(wikiResponse.query.pages)[0]];
+      //var firstObject = Object.keys(wikiResponse)[0];
       termToChange.style["text-decoration"] = "underline";
-      termToChange.innerHTML = '<div class="tooltip" onclick="cancelClick(event);">'+termHTML+'<span class="tooltiptext">'+firstObject.title+'</span></div>';
+      termToChange.innerHTML = '<div class="tooltip" onclick="cancelClick(event);">'+termHTML+'<span class="tooltiptext">'+wikiResponse[0].content+'</span></div>';
 
     });
 
