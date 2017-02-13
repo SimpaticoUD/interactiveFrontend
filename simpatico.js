@@ -1,4 +1,5 @@
-var proxyURL = 'https://simpatico.morelab.deusto.es/';
+// Declare here the base url which will be used for the api
+var baseURL = 'https://simpatico.morelab.deusto.es/';
 
 var annotatedText = [];
 var paragraphs =[];
@@ -78,30 +79,8 @@ function simplify(name)
 
     document.getElementById(name).style.borderBottom = "thick solid " + functionsColors["simplify"];
 
-    switch (name) {
-      case "sp0":
-        var textReplace = '<li style="font-size: 1em; list-style: circle;">a) Copia compulsada do documento nacional de identidade <span class="simp-text-term">(DNI)</span> ou ben do pasaporte ou do número de identificación de estranxeiro <span class="simp-text-term">(NIE)</span>.	</li>';
-        break;
-
-      case "sp1":
-        var textReplace = '<li style="font-size: 1em; list-style: circle">b) Copia do certificado de empadroamento, emitido polo concello correspondente.</li>';
-        break;
-
-      case "sp2":
-        var textReplace = '<li style="font-size: 1em; list-style: circle">c) Copia da declaración do imposto da renda das persoas físicas correspondente ao último período en que se presente a solicitude.</li>';
-        break;
-
-      case "sp3":
-        var textReplace = '<li style="font-size: 1em; list-style: circle">d) Copia do libro de familia da persoa solicitante no caso de queira acudir ao programa.	</li>';
-        break;
-
-      case "sp4":
-        var textReplace = '<li style="font-size: 1em; list-style: circle">e) Certificado do grao de discapacidade do fillo ou filla da persoa solicitante, de la <span class="simp-text-term">Xunta</span> de Galicia.</li>';
-        break;
-
-      default:
-
-    }
+    // As we don't have a TAE working environment, we replace the text with a fake text
+    var textReplace = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula cursus auctor.';
 
     var clonedDiv = document.getElementById(name).cloneNode(true);
     //var clonedDiv = document.createElement('div');
@@ -109,17 +88,6 @@ function simplify(name)
     clonedDiv.setAttribute("onclick", "closeSimp()");
     clonedDiv.innerHTML = textReplace;
     clonedDiv.style.position='relative';
-
-    //document.getElementById(name).style.visibility='hidden';
-
-    //document.getElementById(name).parentNode.replaceChild(clonedDiv, document.getElementById(name));
-
-    // document.getElementById(name).setAttribute("onclick", "closeSimp(\'"+document.getElementById(name).id+"\')");
-    //
-    // fade(document.getElementById(name), textReplace, unfade);
-
-    //document.getElementById(name).parentNode.appendChild(clonedDiv);
-    //move(document.getElementById(name));
 
     fadeOut(document.getElementById(name), textReplace);
 
@@ -217,15 +185,16 @@ function switchsimplify()
     document.getElementById("simplifySwitch").value="simplifyOn";
 
     //paragraphs.parrafo1.onclick = function() { checkButtons('parrafo1'); };
-
+    paragraphId = 1;
       for (var i = 0, len = paragraphs.length; i < len; i++) {
-        paragraphs[i].setAttribute("id", "sp"+i);
+        paragraphs[i].setAttribute("id", "Paragraph"+paragraphId);
         var paragraph = document.getElementById(paragraphs[i].id);
         var paragraphName = paragraphs[i].id;
         paragraphs[i].style.position='relative';
         paragraphs[i].setAttribute("onclick", "simplify('"+paragraphName+"');");
         paragraphs[i].style.borderLeft = "thick solid " + functionsColors["simplify"];
         //paragraph.onclick = function(paragraphName) { checkButtons(paragraphName); };
+        paragraphId++;
       }
 
   }else{
@@ -286,14 +255,14 @@ function citizenpedia(name)
 
     questionsHtml = "RELATED QUESTIONS:<ul>";
 
-    jQuery.getJSON(proxyURL+'/citizenpedia/api/qae/questions/'+simpaticoEservice+'/'+name,
+    jQuery.getJSON(baseURL+'/citizenpedia/api/qae/questions/'+simpaticoEservice+'/'+name,
       function(jsonResponse)
       {
         for (var q = 0; q < Object.keys(jsonResponse).length; q++) {
-          questionsHtml += "<li onclick=\"cancelClick(event);\"><a href=\""+ proxyURL + "citizenpedia/questions/show/"+Object.values(jsonResponse)[q]._id + "\">" + Object.values(jsonResponse)[q].title + "</a></li>";
+          questionsHtml += "<li onclick=\"cancelClick(event);\"><a href=\""+ baseURL + "citizenpedia/questions/show/"+Object.values(jsonResponse)[q]._id + "\">" + Object.values(jsonResponse)[q].title + "</a></li>";
 
         }
-        questionsHtml += "<li onclick=\"cancelClick(event);\"><a href=\"https://simpatico.morelab.deusto.es/citizenpedia/questions/create\">Add New Question</a></li>";
+        questionsHtml += "<li onclick=\"cancelClick(event);\"><a href=\"https://simpatico.morelab.deusto.es/citizenpedia/questions/create?tags=Benestar,"+simpaticoEservice+","+name+"\">Add New Question</a></li>";
         questionsHtml += "</ul>";
         questionsDiv.innerHTML = questionsHtml;
         document.getElementById(name).appendChild(questionsDiv);
@@ -339,7 +308,7 @@ function changeTooltip(termToChange)
   term = term.replace("(","");
   term = term.replace(")","");
 
-  jQuery.getJSON(proxyURL+'/citizenpedia/api/terms/'+ term,
+  jQuery.getJSON(baseURL+'/citizenpedia/api/terms/'+ term,
     function(wikiResponse)
     {
       //var firstObject = Object.keys(wikiResponse)[0];
